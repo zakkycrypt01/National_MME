@@ -1,17 +1,12 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { getChapterById } from '@/lib/data';
 
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'dashboard.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
-    
-    const chapter = data.chapters?.find((c: any) => c.id === parseInt(params.id));
+    const chapter = await getChapterById(parseInt(params.id));
     
     if (!chapter) {
       return NextResponse.json(

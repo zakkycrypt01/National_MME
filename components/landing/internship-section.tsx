@@ -1,25 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Lock, MapPin, Briefcase, DollarSign, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 export default function InternshipSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [landingData, setLandingData] = useState<any>(null)
-
-  useEffect(() => {
-    fetch('/api/landing')
-      .then(res => res.json())
-      .then(data => setLandingData(data))
-      .catch(err => console.error('Error loading data:', err))
-  }, [])
-
-  if (!landingData) return <div className="py-20">Loading...</div>
-
+  const { landingData } = useLandingData()
   const { internships, navigation } = landingData
 
   const nextSlide = () => {

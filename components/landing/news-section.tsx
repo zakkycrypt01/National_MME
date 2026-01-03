@@ -1,23 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, FileText, Download, ArrowRight } from "lucide-react"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 export default function NewsSection() {
-  const [landingData, setLandingData] = useState<any>(null)
-
-  useEffect(() => {
-    fetch('/api/landing')
-      .then(res => res.json())
-      .then(data => setLandingData(data))
-      .catch(err => console.error('Error loading data:', err))
-  }, [])
-
-  if (!landingData) return <div className="py-20">Loading...</div>
-
+  const { landingData } = useLandingData()
   const { news } = landingData
 
   const getTypeIcon = (type: string) => {

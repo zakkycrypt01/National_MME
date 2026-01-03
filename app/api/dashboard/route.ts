@@ -1,13 +1,9 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { getDashboardData } from '@/lib/data';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'dashboard.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
-    
+    const data = await getDashboardData();
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error reading dashboard data:', error);

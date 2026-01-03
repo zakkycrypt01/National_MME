@@ -5,25 +5,20 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { MapPin, Lock, Users } from "lucide-react"
 import Link from "next/link"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 // Lazy load the map component to avoid SSR issues
 const InteractiveMap = lazy(() => import('./interactive-map'))
 
 export default function NetworkSection() {
-  const [landingData, setLandingData] = useState<any>(null)
+  const { landingData } = useLandingData()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSchool, setSelectedSchool] = useState<any>(null)
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
-    fetch('/api/landing')
-      .then(res => res.json())
-      .then(data => setLandingData(data))
-      .catch(err => console.error('Error loading data:', err))
   }, [])
-
-  if (!landingData) return <div className="py-20">Loading...</div>
 
   const { network, navigation } = landingData
 

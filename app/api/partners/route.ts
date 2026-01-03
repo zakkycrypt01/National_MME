@@ -1,14 +1,10 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { getPartnersData } from '@/lib/data';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'dashboard.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
-    
-    return NextResponse.json(data.partners || {});
+    const partners = await getPartnersData();
+    return NextResponse.json(partners);
   } catch (error) {
     console.error('Error reading partners data:', error);
     return NextResponse.json(

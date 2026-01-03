@@ -1,13 +1,9 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { getLandingData } from '@/lib/data';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'landing.json');
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
-    
+    const data = await getLandingData();
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error reading landing data:', error);

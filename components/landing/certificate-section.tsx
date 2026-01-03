@@ -2,12 +2,13 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Award, Shield, Download, Eye } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 const iconMap: { [key: string]: React.ElementType } = {
   shield: Shield,
@@ -18,17 +19,7 @@ const iconMap: { [key: string]: React.ElementType } = {
 
 export default function CertificateSection() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const [landingData, setLandingData] = useState<any>(null)
-
-  useEffect(() => {
-    fetch('/api/landing')
-      .then(res => res.json())
-      .then(data => setLandingData(data))
-      .catch(err => console.error('Error loading data:', err))
-  }, [])
-
-  if (!landingData) return <div className="py-20">Loading...</div>
-
+  const { landingData } = useLandingData()
   const { certificate, navigation } = landingData
 
   return (

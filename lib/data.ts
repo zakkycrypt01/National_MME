@@ -1,17 +1,26 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { db } from './firebase';
 
 /**
- * Read and parse a JSON file from the data directory
+ * Get document from Firestore
  */
-export async function readJsonFile(filename: string) {
+export async function getFirestoreDocument(collection: string, document: string): Promise<any> {
   try {
-    const filePath = path.join(process.cwd(), 'data', filename);
-    const fileContents = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(fileContents);
+    const docRef = db.collection(collection).doc(document);
+    const docSnap = await docRef.get();
+    
+    if (!docSnap.exists) {
+      throw new Error(`Document ${document} not found in ${collection}`);
+    }
+    
+    const data = docSnap.data();
+    if (!data) {
+      throw new Error(`Document ${document} has no data`);
+    }
+    
+    return data;
   } catch (error) {
-    console.error(`Error reading ${filename}:`, error);
-    throw new Error(`Failed to read ${filename}`);
+    console.error(`Error reading ${collection}/${document}:`, error);
+    throw new Error(`Failed to read ${collection}/${document}`);
   }
 }
 
@@ -19,14 +28,14 @@ export async function readJsonFile(filename: string) {
  * Get landing page data
  */
 export async function getLandingData() {
-  return await readJsonFile('landing.json');
+  return await getFirestoreDocument('site-data', 'landing');
 }
 
 /**
  * Get dashboard data
  */
 export async function getDashboardData() {
-  return await readJsonFile('dashboard.json');
+  return await getFirestoreDocument('site-data', 'dashboard');
 }
 
 /**

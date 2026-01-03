@@ -28,3 +28,60 @@ Continue building your app on:
 2. Deploy your chats from the v0 interface
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
+
+## Prerequisites
+
+Before running this project, you need to:
+
+1. **Set up Firebase Firestore** - This project uses Firestore as the database
+2. **Configure environment variables** - Firebase credentials are required
+
+📚 **See [FIREBASE_SETUP.md](./FIREBASE_SETUP.md) for detailed setup instructions**
+
+## Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd National_MME
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Firebase** (See [FIREBASE_SETUP.md](./FIREBASE_SETUP.md))
+   - Create a Firebase project
+   - Download service account credentials
+   - Configure `.env.local` with Firebase credentials
+
+4. **Migrate data to Firestore**
+   ```bash
+   node scripts/migrate-to-firestore.js
+   ```
+
+5. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Project Structure
+
+- `/app` - Next.js app router pages and layouts
+- `/components` - React components
+- `/lib` - Utility functions and Firebase configuration
+- `/data` - JSON data files (for reference/migration)
+- `/scripts` - Utility scripts including Firestore migration
+- `/public` - Static assets
+
+## Technology Stack
+
+- **Framework**: Next.js 16 with App Router
+- **Database**: Firebase Firestore
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn/ui
+- **Maps**: Leaflet & React Leaflet
+- **Language**: TypeScript

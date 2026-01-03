@@ -7,19 +7,22 @@ import InternshipSection from "@/components/landing/internship-section"
 import NewsSection from "@/components/landing/news-section"
 import CouncilSection from "@/components/landing/council-section"
 import Footer from "@/components/landing/footer"
+import { LandingDataProvider } from "@/contexts/landing-data-context"
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-background">
-      <Header />
-      <HeroSection />
-      <TrustBar />
-      <NetworkSection />
-      <CertificateSection />
-      <InternshipSection />
-      <NewsSection />
-      <CouncilSection />
-      <Footer />
-    </main>
+    <LandingDataProvider>
+      <main className="min-h-screen bg-background">
+        <Header />
+        <HeroSection />
+        <TrustBar />
+        <NetworkSection />
+        <CertificateSection />
+        <InternshipSection />
+        <NewsSection />
+        <CouncilSection />
+        <Footer />
+      </main>
+    </LandingDataProvider>
   )
 }

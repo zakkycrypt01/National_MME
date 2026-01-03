@@ -1,7 +1,9 @@
-import { getLandingData } from "@/lib/data"
+"use client"
 
-export default async function TrustBar() {
-  const landingData = await getLandingData()
+import { useLandingData } from "@/contexts/landing-data-context"
+
+export default function TrustBar() {
+  const { landingData } = useLandingData()
   const { trustBar } = landingData
 
   return (

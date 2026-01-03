@@ -3,20 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play, MapPin } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 export default function HeroSection() {
-  const [landingData, setLandingData] = useState<any>(null)
-
-  useEffect(() => {
-    fetch('/api/landing')
-      .then(res => res.json())
-      .then(data => setLandingData(data))
-      .catch(err => console.error('Error loading data:', err))
-  }, [])
-
-  if (!landingData) return <div className="py-20">Loading...</div>
-
+  const { landingData } = useLandingData()
   const { hero, navigation } = landingData
 
   return (

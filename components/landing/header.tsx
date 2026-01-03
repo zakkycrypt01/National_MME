@@ -4,26 +4,20 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [landingData, setLandingData] = useState<any>(null)
+  const { landingData } = useLandingData()
 
   useEffect(() => {
-    fetch('/api/landing')
-      .then(res => res.json())
-      .then(data => setLandingData(data))
-      .catch(err => console.error('Error loading data:', err))
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  if (!landingData) return null
 
   const { site, navigation } = landingData
 
@@ -45,7 +39,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navigation.links.map((link) => (
+            {navigation.links.map((link: { href: string; label: string }) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -76,7 +70,7 @@ export default function Header() {
         {isMobileMenuOpen && (
           <div className="md:hidden pb-4 border-b border-border">
             <div className="flex flex-col gap-4">
-              {navigation.links.map((link) => (
+              {navigation.links.map((link: { href: string; label: string }) => (
                 <Link
                   key={link.href}
                   href={link.href}

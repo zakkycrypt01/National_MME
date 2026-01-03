@@ -1,7 +1,9 @@
+"use client"
+
 import type React from "react"
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react"
-import landingData from "@/data/landing.json"
+import { useLandingData } from "@/contexts/landing-data-context"
 
 const socialIconMap: { [key: string]: React.ElementType } = {
   facebook: Facebook,
@@ -12,6 +14,7 @@ const socialIconMap: { [key: string]: React.ElementType } = {
 }
 
 export default function Footer() {
+  const { landingData } = useLandingData()
   const { site, footer } = landingData
 
   return (
@@ -32,7 +35,7 @@ export default function Footer() {
             </p>
             {/* Social Links */}
             <div className="flex gap-3">
-              {site.social.map((social) => {
+              {site.social.map((social: { platform: string; url: string; label: string }) => {
                 const IconComponent = socialIconMap[social.platform] || Facebook
                 return (
                   <a
@@ -52,7 +55,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
             <ul className="space-y-3">
-              {footer.quickLinks.map((link) => (
+              {footer.quickLinks.map((link: { label: string; href: string }) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
@@ -69,7 +72,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-foreground mb-4">Resources</h3>
             <ul className="space-y-3">
-              {footer.resources.map((link) => (
+              {footer.resources.map((link: { label: string; href: string }) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
@@ -109,7 +112,7 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">{footer.copyright}</p>
             <div className="flex gap-6">
-              {footer.legal.map((link) => (
+              {footer.legal.map((link: { label: string; href: string }) => (
                 <Link
                   key={link.label}
                   href={link.href}
